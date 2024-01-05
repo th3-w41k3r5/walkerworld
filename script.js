@@ -28,7 +28,7 @@ function updateTimer() {
       
         const introModalText = document.querySelector("#introModal p");
         if (introModalText) {
-            introModalText.textContent = "Who I Am coming out very soon, stay tuned!🥷💥";
+            introModalText.textContent = "04.01.2024 - Who I Am is out now! Listen or Download it now 🥷💥";
         }
 
        
