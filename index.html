@@ -214,27 +214,37 @@
   
   
   <script>
-      const passwordForm = document.getElementById("passwordForm");
-      const loadingScreen = document.getElementById("loadingScreen");
+    const passwordForm = document.getElementById("passwordForm");
+    const loadingScreen = document.getElementById("loadingScreen");
 
-      passwordForm.addEventListener("submit", function(event) {
-          event.preventDefault();
-          const enteredPassword = document.getElementById("password").value;
+    passwordForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const enteredPassword = document.getElementById("password").value;
 
-         
-          if (enteredPassword === "474nxw41k3r5") {
-              document.getElementById("passwordPage").style.display = "none";
-              loadingScreen.style.display = "flex";
+        const response = await fetch('/.netlify/functions/validatePassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password: enteredPassword })
+        });
 
-              setTimeout(function() {
-                  loadingScreen.style.display = "none";
-                  document.getElementById("content").style.display = "block";
-              }, 2000); 
-          } else {
-              alert("Incorrect password. Please try again.");
-          }
-      });
-  </script>
+        const result = await response.json();
+
+        if (result.valid) {
+            document.getElementById("passwordPage").style.display = "none";
+            loadingScreen.style.display = "flex";
+
+            setTimeout(function() {
+                loadingScreen.style.display = "none";
+                document.getElementById("content").style.display = "block";
+            }, 2000); 
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    });
+</script>
+
  
   <script>
         const audioElements = document.querySelectorAll('audio');
